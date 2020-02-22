@@ -3,9 +3,6 @@ DM_IP=$(shell command -v docker-machine 1> /dev/null && docker-machine ip || ech
 help:
 	@egrep "^#" Makefile
 
-
-
-
 # target: docker-up|du                   - Start docker containers
 du: docker-up
 docker-up: docker-compose-build logs-app
@@ -16,7 +13,6 @@ docker-compose-force-rebuild:
 
 docker-compose-build:
 	docker-compose up -d --build
-
 
 # target: up                   		 - Use entr to Hot Reload node app
 watch:
