@@ -1,0 +1,15 @@
+syntax_version: "7"
+docker_image: zalexki/node-electron-gtk3
+enable_gui: true
+container_working_directory: /app
+work_in_project_folder_as: /app
+privileged: true
+volumes:
+  main:
+    host_path: /var/run/docker.sock
+    container_path: /var/run/docker.sock
+macros:
+  run:
+    actions:
+      - npm install
+      - npm start
