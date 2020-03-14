@@ -11,5 +11,6 @@ volumes:
 macros:
   run:
     actions:
-      - npm install
+      # - npm install
+      # - cd _dev/ && npm run dev:no-watch && cd ..
       - npm start
