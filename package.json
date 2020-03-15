@@ -11,6 +11,12 @@
   "repository": "https://github.com/zalexki/maximus-electron",
   "author": "GitHub",
   "license": "CC0-1.0",
+  "build": {
+    "appId": "com.example.app",
+    "mac": {
+      "hardenedRuntime": true
+    }
+  },
   "devDependencies": {
     "electron": "^4.0.7",
     "electron-builder": "^22.3.2"

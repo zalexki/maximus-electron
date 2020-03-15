@@ -17,7 +17,6 @@ docker-compose-build:
 # target: up                   		 - Use entr to Hot Reload node app
 watch:
 	docker-compose run --rm app sh -c "cd _dev && npm run dev"
-	# nodemon -L -e js,vue --ignore "views/js" --exec "./nut run"
 
 restart: dd du
 
