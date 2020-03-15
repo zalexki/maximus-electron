@@ -16,8 +16,11 @@
 
 <script>
   import { isArray } from 'util';
+  // import mydockerjs from 'mydockerjs';
   const child_process = require('child_process'); 
   const cmd = require('node-cmd');
+  // const mydockerjs = require('mydockerjs');
+  const Docker = require('dockerode');
 
   export default {
     name: 'Home',
@@ -37,15 +40,15 @@
         console.log(item);
       },
       getContainersIDs() {
-        setInterval(() => {
-          cmd.get('docker ps -aq', (err, stdout, stderr) => { 
-            this.containersIDs = stdout.split("\n");
-            this.containerList = [];
-            this.containersIDs.forEach(containerID => {
-              this.getContainerInspectByID(containerID);
-            });
-          });
-        }, 1000);
+        // setInterval(() => {
+        //   cmd.get('docker ps -aq', (err, stdout, stderr) => { 
+        //     this.containersIDs = stdout.split("\n");
+        //     this.containerList = [];
+        //     this.containersIDs.forEach(containerID => {
+        //       this.getContainerInspectByID(containerID);
+        //     });
+        //   });
+        // }, 1000);
       },
       getContainerInspectByID(containerID) {
         cmd.get('docker inspect ' + containerID, (err, stdout, stderr) => { 
@@ -66,7 +69,16 @@
       }
     },
     mounted() {
-      this.getContainersIDs();
+      // this.getContainersIDs();
+      // cmd.get('docker ps -aq', (err, stdout, stderr) => { 
+      //   this.containersIDs = stdout.split("\n");
+      //   this.containerList = [];
+      //   this.containersIDs.forEach(containerID => {
+      //     this.getContainerInspectByID(containerID);
+      //   });
+      // });
+      let list = Docker.listContainers();
+      console.log(mydockerjs);
     }
   };
 </script>

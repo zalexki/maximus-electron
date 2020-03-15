@@ -1,6 +1,8 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
 const request = require('request');
+const Docker = require('dockerode');
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -25,6 +27,12 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+  let docker = new Docker;
+  docker.listContainers(function (err, containers) {
+    console.log(containers);
+  });
+  console.log('te');
+  console.log(mainWindow);
 }
 
 // This method will be called when Electron has finished
