@@ -1,9 +1,29 @@
-# maximus-electron
+# maximus
 
-`./nut run` to start the project
+> An electron-vue project to easily use prestashop docker containers
 
-you need to install XQuartz on Mac
+## Stack
+node v12.16.1
+npm 6.13.4
+
+## Build Setup
+
+``` bash
+# install dependencies
+npm install
+
+# serve with hot reload at localhost:9080
+npm run dev
+
+# build electron application for production
+npm run build
 
 
-# TODO:
-look at this guy work : https://github.com/giper45/docker-js/tree/master/lib
+# lint all JS/Vue component files in `src/`
+npm run lint
+
+```
+
+---
+
+This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[45a3e22](https://github.com/SimulatedGREG/electron-vue/tree/45a3e224e7bb8fc71909021ccfdcfec0f461f634) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
