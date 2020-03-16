@@ -29,32 +29,44 @@
 </template>
 
 <script>
-import SystemInformation from "./LandingPage/SystemInformation";
+import SystemInformation from './LandingPage/SystemInformation'
 
 export default {
-  name: "landing-page",
+  name: 'landing-page',
   components: { SystemInformation },
-  data() {
+  data () {
     return {
       allContainers: []
-    };
+    }
   },
   methods: {
-    open(link) {
-      this.$electron.shell.openExternal(link);
+    open (link) {
+      this.$electron.shell.openExternal(link)
     },
-    getContainers() {
-      var Docker = require("dockerode");
-      var docker = new Docker({ socketPath: "/var/run/docker.sock" });
+    getContainers () {
+      var Docker = require('dockerode')
+      var docker = new Docker({ socketPath: '/var/run/docker.sock' })
+      var queries = {
+        all: true,
+        size: true
+      }
+      const updateContainers = containers => {
+        this.allContainers = containers
+        this.error = {}
+      }
+      const updateErrored = err => {
+        this.allContainers = []
+        this.error = err
+        console.err(err)
+      }
       /* eslint handle-callback-err: "error" */
-      docker.listContainers(function(error, containers) {
-        containers.forEach(function(containerInfo) {
-          alert(docker.getContainer(containerInfo).id.Names);
-        });
-      });
+      docker
+        .listContainers(queries)
+        .then(updateContainers)
+        .catch(updateErrored)
     }
   }
-};
+}
 </script>
 
 <style>
