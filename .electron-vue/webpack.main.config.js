@@ -78,6 +78,7 @@ if (process.env.NODE_ENV === 'production') {
       'process.env.NODE_ENV': '"production"'
     })
   )
+  // mainConfig.devtool = 'source-map'
 }
 
 module.exports = mainConfig

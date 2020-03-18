@@ -1,73 +1,67 @@
 <template>
   <div id="wrapper">
-    <img id="logo" src="~@/assets/logo.png" alt="electron-vue" />
-    <main>
-      <div class="left-side">
-        <span class="title">Welcome to your new project!</span>
-        <system-information></system-information>
-      </div>
-
-      <div class="right-side">
-        <div class="doc">
-          <div class="title">Getting Started</div>
-          <p>{{allContainers}}</p>
-          <button
-            @click="open('https://simulatedgreg.gitbooks.io/electron-vue/content/')"
-          >Read the Docs</button>
-          <br />
-          <br />
-        </div>
-        <div class="doc">
-          <div class="title alt">Other Documentation</div>
-          <button class="alt" @click="open('https://electron.atom.io/docs/')">Electron</button>
-          <button class="alt" @click="open('https://vuejs.org/v2/guide/')">Vue.js</button>
-          <button class="alt" @click="getContainers()">con</button>
-        </div>
-      </div>
-    </main>
+    <b-container>
+      <b-table
+        show-empty
+        hover
+        :items="toto"
+        :fields="containerFields"
+        @row-clicked="onRowClicked"
+      >
+      </b-table>
+    </b-container>
   </div>
 </template>
 
 <script>
 import SystemInformation from './LandingPage/SystemInformation'
+import Docker from 'dockerode'
 
 export default {
   name: 'landing-page',
   components: { SystemInformation },
   data () {
     return {
-      allContainers: []
+      toto: [],
+      containerFields: [
+        {key: 'name', label: 'Name', sortable: true},
+        {key: 'running', label: 'Running', sortable: true},
+        {key: 'image', label: 'Image', sortable: true},
+      ],
+      docker: new Docker({ socketPath: '/var/run/docker.sock' })
     }
   },
-  methods: {
-    open (link) {
-      this.$electron.shell.openExternal(link)
+  computed: {
+    test() {
+      return this.$store.getters.containerList;
     },
-    getContainers () {
-      var Docker = require('dockerode')
-      var docker = new Docker({ socketPath: '/var/run/docker.sock' })
-      var queries = {
-        all: true,
-        size: true
-      }
-      const updateContainers = containers => {
-        this.allContainers = containers
-        this.error = {}
-      }
-      const updateErrored = err => {
-        this.allContainers = []
-        this.error = err
-        console.err(err)
-      }
-      /* eslint handle-callback-err: "error" */
-      docker
-        .listContainers(queries)
-        .then(updateContainers)
-        .catch(updateErrored)
-    }
+  },
+  watch: {
+    test(value) {
+      this.getContainerList(value);
+    },
+  },
+  methods: {
+    getContainerList(value) {
+      let arr = [];
+      value.forEach(container => {
+        arr.push({
+          name: container.Names[0],
+          running: container.State,
+          image: container.Image
+        })
+      });
+
+      console.log(arr);
+
+      this.toto = arr;
+    },
+    onRowClicked(item) {
+      console.log(item)
+    },
   }
 }
-</script>
+</script> 
 
 <style>
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro");

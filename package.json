@@ -10,7 +10,7 @@
     "build:dir": "node .electron-vue/build.js && electron-builder --dir",
     "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
     "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
-    "dev": "node .electron-vue/dev-runner.js",
+    "dev": "node .electron-vue/dev-runner.js --debug",
     "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter src",
     "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix src",
     "pack": "npm run pack:main && npm run pack:renderer",
@@ -55,8 +55,11 @@
     }
   },
   "dependencies": {
+    "@vue/cli-service": "^4.2.3",
     "axios": "^0.18.0",
+    "bootstrap-vue": "^2.7.0",
     "dockerode": "^3.1.0",
+    "lodash": "^4.17.15",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
     "vue-router": "^3.0.1",

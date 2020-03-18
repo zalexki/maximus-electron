@@ -1,17 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { createPersistedState, createSharedMutations } from 'vuex-electron'
-
-import modules from './modules'
+import containerList from './containerList'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules,
-  plugins: [
-    createPersistedState(),
-    createSharedMutations()
-  ],
+  modules: {
+    containerListID: containerList
+  },
   strict: process.env.NODE_ENV !== 'production'
 })
