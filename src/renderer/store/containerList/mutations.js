@@ -2,8 +2,13 @@ export default {
   UPDATE_CONTAINER (state, container) {
 
     for (var i = 0; i < state.containerList.length; i++) { 
-      if (state.containerList[i].Id === container.Id) { 
-        state.containerList[i] = container;
+      if (state.containerList[i].Id === container.Id) {
+        state.containerList[i] = {
+          Id: container.Id,
+          name: container.Names[0],
+          running: container.State,
+          image: container.Image
+        };
         // console.log(state.containerList[i].Names);
         // console.log(state.containerList[i].State);
         // console.log(container.Names);
@@ -20,7 +25,12 @@ export default {
     // });
   },
   ADD_CONTAINER (state, container) {
-    state.containerList.push(container)
+    state.containerList.push({
+      Id: container.Id,
+      name: container.Names[0],
+      running: container.State,
+      image: container.Image
+    })
   },
   REMOVE_CONTAINER (state, container) {
     for (var i = 0; i < state.containerList.length; i++) { 

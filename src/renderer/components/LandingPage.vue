@@ -1,34 +1,36 @@
 <template>
   <v-container fluid>
-    <v-data-iterator
-      :items="trololo"
+    <v-data-table
+      :headers="headers"
+      :items="containerListeuh"
+      class="elevation-1"
     >
-      <template v-slot:default="props">
-      <v-col>
-        <v-col
-          v-for="item in props.items"
-          :key="item.name"
-          cols="12"
-          sm="6"
-          md="4"
-          lg="3"
-        >
-          <v-card>
-            {{ item.name }} / 
-            {{ item.running }}
-            <v-divider></v-divider>
-            {{ item.image }}
-          </v-card>
-        </v-col>
-      </v-col>
+      <template v-slot:item.image="{ item }">
+        {{item}}
       </template>
-    </v-data-iterator>
+      <template v-slot:item.actions="{ item }">
+        <v-icon
+          small
+          class="mr-2"
+          @click="editItem(item)"
+        >
+          mdi-pencil
+        </v-icon>
+        <v-icon
+          small
+          @click="deleteItem(item)"
+        >
+          mdi-delete
+        </v-icon>
+      </template>
+    </v-data-table>
   </v-container>
 </template>
 
 <script>
 import SystemInformation from './LandingPage/SystemInformation'
 import Docker from 'dockerode'
+import { mapState } from 'vuex'
 
 export default {
   name: 'landing-page',
@@ -36,35 +38,41 @@ export default {
   data () {
     return {
       toto: [],
-      containerFields: [
-        {key: 'name', label: 'Name', sortable: true},
-        {key: 'running', label: 'Running', sortable: true},
-        {key: 'image', label: 'Image', sortable: true},
+      headers:[
+        {text: 'name', value: 'name'},
+        {text: 'Running', value: 'running'},
+        {text: 'image', value: 'image'},
       ],
       docker: new Docker({ socketPath: '/var/run/docker.sock' })
     }
   },
   computed: {
-    qvd() {return this.$store.getters.formattedList;},
-    ite() {
-      let arr = [];
-      let list = this.$store.getters.containerList;
-      list.forEach(container => {
-        arr.push({
-          name: container.Names[0],
-          running: container.State,
-          image: container.Image
-        })
-      });
-
-      console.log(arr);
-
-      this.toto = arr;
-      return arr;
+    ...mapState({
+      containerListeuh: state => state.containerList
+    }),
+    computedGetContainerList() {
+      return this.$store.getters.containerList;
     },
+    // customBuildAndLogFormattedList(value) {
+      
+    //   let arr = [];
+    //   let list = this.$store.getters.containerList;
+    //   list.forEach(container => {
+    //     arr.push({
+    //       name: container.Names[0],
+    //       running: container.State,
+    //       image: container.Image
+    //     })
+    //   });
+
+    //   console.log(arr);
+
+    //   this.toto = arr;
+    //   return arr;
+    // },
   },
   watch: {
-    trololo() {
+    testWatchBuild() {
       let arr = [];
       let list = this.$store.getters.containerList;
       list.forEach(container => {
@@ -80,9 +88,8 @@ export default {
       this.toto = arr;
       return arr;
     },
-    test() {
-      console.log(this.$store.getters.formattedList);
-      return this.$store.getters.formattedList;
+    testWatchGetFormattedList() {
+      return this.$store.getters.containerList;
     },
   },
   methods: {
