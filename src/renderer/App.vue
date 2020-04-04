@@ -1,7 +1,11 @@
 <template>
-  <div id="app">
+  <v-app>
+  <v-content>
+   <div id="app">
     <router-view></router-view>
-  </div>
+   </div>
+  </v-content>
+ </v-app>
 </template>
 
 <script>

@@ -4,12 +4,12 @@ export default {
   updateContainerList ({ commit, getters }, {containers}) {
     
     containers.forEach(dockerContainer => {
-      let isIn = false,
-        removedContainers = [];
+      let isIn = false;
 
       getters.containerList.forEach(storeContainerList => {
         if (storeContainerList.Id === dockerContainer.Id) {
           commit('UPDATE_CONTAINER', dockerContainer)
+
           isIn = true;
         }
       });
@@ -28,13 +28,9 @@ export default {
       }
     });
 
-
-    // console.log(containers);
-    
     // containers.containers.forEach(container => {
     //   commit('UPDATE_CONTAINER', container)
     // });
-
 
     // getters.containerList.forEach(stateContainer => {
     //   console.log(stateContainer);

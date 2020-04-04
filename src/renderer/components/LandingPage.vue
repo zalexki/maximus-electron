@@ -1,16 +1,29 @@
 <template>
-  <div id="wrapper">
-    <b-container>
-      <b-table
-        show-empty
-        hover
-        :items="toto"
-        :fields="containerFields"
-        @row-clicked="onRowClicked"
-      >
-      </b-table>
-    </b-container>
-  </div>
+  <v-container fluid>
+    <v-data-iterator
+      :items="trololo"
+    >
+      <template v-slot:default="props">
+      <v-col>
+        <v-col
+          v-for="item in props.items"
+          :key="item.name"
+          cols="12"
+          sm="6"
+          md="4"
+          lg="3"
+        >
+          <v-card>
+            {{ item.name }} / 
+            {{ item.running }}
+            <v-divider></v-divider>
+            {{ item.image }}
+          </v-card>
+        </v-col>
+      </v-col>
+      </template>
+    </v-data-iterator>
+  </v-container>
 </template>
 
 <script>
@@ -32,19 +45,11 @@ export default {
     }
   },
   computed: {
-    test() {
-      return this.$store.getters.containerList;
-    },
-  },
-  watch: {
-    test(value) {
-      this.getContainerList(value);
-    },
-  },
-  methods: {
-    getContainerList(value) {
+    qvd() {return this.$store.getters.formattedList;},
+    ite() {
       let arr = [];
-      value.forEach(container => {
+      let list = this.$store.getters.containerList;
+      list.forEach(container => {
         arr.push({
           name: container.Names[0],
           running: container.State,
@@ -55,7 +60,32 @@ export default {
       console.log(arr);
 
       this.toto = arr;
+      return arr;
     },
+  },
+  watch: {
+    trololo() {
+      let arr = [];
+      let list = this.$store.getters.containerList;
+      list.forEach(container => {
+        arr.push({
+          name: container.Names[0],
+          running: container.State,
+          image: container.Image
+        })
+      });
+
+      console.log(arr);
+
+      this.toto = arr;
+      return arr;
+    },
+    test() {
+      console.log(this.$store.getters.formattedList);
+      return this.$store.getters.formattedList;
+    },
+  },
+  methods: {
     onRowClicked(item) {
       console.log(item)
     },
